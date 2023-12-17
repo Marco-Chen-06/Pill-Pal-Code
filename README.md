@@ -1,6 +1,6 @@
 [![Product Name Screen Shot][product-screenshot1]](https://example.com)
 ## Overview
-This is the source code to a compact pill counter made using a Raspberry Pi, a stepper motor, and an infrared sensor. The above image is the Tinkercad model of the pill counter.
+This is the Python source code to a compact pill counter made using a Raspberry Pi, a stepper motor, and an infrared sensor. The above image is the Tinkercad model of the pill counter.
 
 ## Materials:
 Raspberry Pi 4B
