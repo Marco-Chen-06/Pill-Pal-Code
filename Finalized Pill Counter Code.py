@@ -21,7 +21,7 @@ for pin in ControlPin:
     GPIO.setup(pin, GPIO.OUT)
     GPIO.output(pin, 0)
 
-# Creates an array to define a sequence of rotation for the stepper motor
+# ceates an array to define a sequence of rotation for the stepper motor
 seq_forward = [
     [1, 0, 0, 0],
     [1, 1, 0, 0],
@@ -43,7 +43,7 @@ seq_reverse = [
     [1, 0, 0, 0]
 ]
 
-# Creates the main window for the pill counter interface
+# creates main window for the pill counter interface
 root = tk.Tk()
 root.title("Main Window")
 root.geometry("1150x600")
@@ -51,7 +51,7 @@ root.configure(bg="light blue")
 question_font = font.Font(size = 47)
 confirm_font = font.Font(size = 30)
 
-# Centers a window given the window's width and height
+# centers window based on width and height of window
 def center_window(window, width, height):
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
@@ -64,37 +64,37 @@ def center_window(window, width, height):
 
 
 
-# Opens a popup asking how many pills the user wants to count
+# opens a popup asking how many pills the user wants to count
 def open_pill_question_popup():
     root.withdraw()
-    # Creates a Toplevel window for the pill question popup
+    # creates a top level window for the pill question popup
     popup_window = tk.Toplevel(root)
     popup_window.configure(bg="light blue")
     popup_window.geometry("1350x700")
     popup_window.title("Pill Counting Popup")
     center_window(popup_window, 1350, 700)
 
-    # Creates a Label to ask the user how many pills they want counted
+    # creates label to ask the user how many pills they want counted
     question_label = tk.Label(popup_window, text="How many pills would you like to count?", font=question_font, pady=70)
     question_label.configure(bg = "light blue")
     question_label.pack()
 
-    # Creates an Entry widget for the user to input the pill amount
+    # creates entry widget for the user to input the pill amount
     input_entry = tk.Entry(popup_window, width=15,  font=question_font)
     input_entry.pack(pady = 50)  # Adds padding to the bottom of the textbox
 
-    # Creates a confirmation button to submit the pill amount
+    # creates confirmation button to submit the pill amount
     confirm_button = tk.Button(popup_window, text="Confirm", command=lambda: start_counting(input_entry, popup_window), font=confirm_font, width=21, height=3)
     confirm_button.pack(pady = 45)  # Adds padding to the bottom of the confirm button
 
 
 
-# Function that opens the counting window
+# opens the counting window
 def start_counting(entry_widget, popup_window):
     global pill_count
     user_input = entry_widget.get()
 
-    # Checks if the input is a valid integer or not (defensive coding!)
+    # checks if the input is a valid integer or not (defensive coding!)
     try:
         pill_count = int(user_input)
     except ValueError:
@@ -103,7 +103,7 @@ def start_counting(entry_widget, popup_window):
     popup_window.destroy()
     open_counting_window()
 
-# Creates a counting window with nested popups to allow for a pill-counter feedback loop
+# creates a counting window with nested popups to allow for a pill-counter feedback loop
 def open_counting_window():
 
     counting_window = tk.Toplevel(root)
@@ -124,7 +124,7 @@ def open_counting_window():
         count_same_button.pack(pady = 30)
         count_new_button.pack(pady = 30)
 
-    # Lets user stay with the same pill counting amount
+    # lets user stay with the same pill counting amount
     def reset_count_same():
         global reached_prescription
         global counted_object
@@ -141,7 +141,7 @@ def open_counting_window():
         count_new_button.pack_forget()
         check_object_count()
 
-    # Lets user change the pill counting amount
+    # lets user change the pill counting amount
     def reset_count_new():
         global reached_prescription
         global counted_object
@@ -172,7 +172,7 @@ def open_counting_window():
     count_same_button = tk.Button(counting_window, text="Count Same", command=lambda: reset_count_same(), font=confirm_font, width=15, height=2)
     count_new_button = tk.Button(counting_window, text="Count New", command=lambda: reset_count_new(), font=confirm_font, width=15, height=2)
 
-# Function to periodically check for object counts w/ the IR sensor
+# function to periodically check for object counts w/ the IR sensor
     def check_object_count():
         global failsafe_count
         global reached_prescription
@@ -201,33 +201,33 @@ def open_counting_window():
         else:
             counted_object = False
        
-        # Next check is after 2 milliseconds if prescription isn't reached
+        # next check is after 2 milliseconds if prescription isn't reached
         if not reached_prescription:
             counting_window.after(2, check_object_count)
         else:
-            # Only checks after 2 milliseconds if failsafe_count is less than 500
+            # only checks after 2 milliseconds if failsafe_count is less than 500
             if failsafe_count < 200:
                 counting_window.after(2, check_object_count)
                 failsafe_count += 1
 
-    # Checks for object counts
+    # checks for object counts
     check_object_count()
 
-# Creates a label to display the opening welcome message
+# creates label to display the opening welcome message
 question_label = tk.Label(root, text="Welcome to the Pill Counter Interface!", font=question_font, pady=125)
 question_label.configure(bg="light blue")
 center_window(root, 1350, 700)
 question_label.pack()
 
-# Creates a button to open the pill counting popup question
+# creates button to open the pill counting popup question
 open_popup_button = tk.Button(root, text="Start Counting!", font = confirm_font, command=open_pill_question_popup, width=27, height=4)
 open_popup_button.pack()
 
-# Initializes pill_count and current_count variables
+# initializes pill_count and current_count variables
 pill_count = 0
 current_count = 0
 
-# Starts the main loop
+# starts the code loop
 root.mainloop()
 
 
